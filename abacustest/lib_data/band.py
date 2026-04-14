@@ -711,6 +711,7 @@ class BandData:
         band_index,
         num_fit_points=5,
         plot_fit=False,
+        fig_save_dir="./"
     ):
         """
         Calculate effective mass for a specific band along a specified direction.
@@ -721,6 +722,7 @@ class BandData:
             band_index (int): Band index to calculate effective mass for (must be at CBM or VBM).
             num_fit_points (int): Number of k-points to use for quadratic fitting.
             plot_fit (bool): If True, plot the fitting curve and data points.
+            fig_save_dir (str): Directory to save the fitting plot.
 
         Note:
             This method does not support nspin=2 (spin-polarized calculations).
@@ -731,6 +733,7 @@ class BandData:
                   Positive for electron-like bands (upward curvature), negative for hole-like bands (downward curvature).
                 - fit_coeffs (list): quadratic fit coefficients [a, b, c] for E = a*x**2 + b*x + c.
                 - a_std: Standard deviation of a.
+                - fig_save_path (str): Path to the saved figure.
         """
         import numpy as np
         import matplotlib.pyplot as plt
@@ -778,16 +781,18 @@ class BandData:
             plt.plot(k_coord_fit, energy_fit, "kD")
             plt.xlabel(r"k ($\AA^{-1}$)")
             plt.ylabel(r"E - E$_{F}$ (eV)")
-            plt.title(f"Effective mass fit: {direction_labels[0]} to {direction_labels[1]} (band {band_index+1})")  # band index starts from 1
+            plt.title(f"Effective mass fit: {direction_labels[0]} to {direction_labels[1]} (band {band_index})")  # band index starts from 1
             plt.tight_layout()
             plt.legend()
-            plt.savefig(f"effective_mass_fit_band_{direction_labels[0]}_to_{direction_labels[1]}_{band_index+1}.png", dpi=300)
+            fig_save_path = os.path.join(fig_save_dir, f"effmass_fit_band{band_index}_{direction_labels[0]}_to_{direction_labels[1]}.png")
+            plt.savefig(fig_save_path, dpi=300)
             plt.close()
 
         return {
             "effective_mass": effective_mass,
             "fit_coeffs": [a, b, c],
             "a_std": a_std,
+            "fig_save_path": fig_save_path
         }
 
     def get_effective_mass_at_edge(

@@ -367,9 +367,11 @@ class PostBand:
                                     self.eff_mass_direction,
                                     band_index=self.eff_mass_index,
                                     num_fit_points=self.eff_mass_fit_points,
-                                    plot_fit=True
+                                    plot_fit=True,
+                                    fig_save_dir=job
                                 )
                                 pprint(eff_mass)
+                                print(f"The effective mass fitting plot is saved to {eff_mass['fig_save_path']}")
                                 results[job]['eff_mass'] = eff_mass
                             
                                 
