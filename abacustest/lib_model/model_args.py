@@ -136,5 +136,10 @@ MODEL_ARGS = {
         "description": "Postprocess the DOS and PDOS data from ABACUS calculations",
         "file": "model_021_dos_pdos",
         "class_name": "DOSPDOSModel"
+    },
+    "piezoelectric": {
+        "description": "Calculate the piezoelectric tensor by finite difference Berry phase method",
+        "file": "model_022_piezoelectric",
+        "class_name": "PiezoelectricModel"
     }
 }
